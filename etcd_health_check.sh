@@ -28,7 +28,7 @@ fi
 
 etcd_table ()
 {
-oc rsh -n openshift-etcd $etcd_pod << EOF > $data_dir/etcd_table.logs
+oc rsh -n openshift-etcd $etcd_pod << EOF > $data_dir/etcd_table.log
 echo "---------- Member List ----------"
 etcdctl member list -w table
 echo "------------------------------------------------------------"
@@ -43,7 +43,7 @@ EOF
 
 etcd_objects_count ()
 {
-oc rsh -n openshift-etcd $etcd_pod > $data_dir/etcd_objects_count.logs <<EOF
+oc rsh -n openshift-etcd $etcd_pod > $data_dir/etcd_objects_count.log <<EOF
 echo "===== ETCD Keys ====="
 etcdctl get / --prefix --keys-only | grep -v ^$ | awk -F '/' '{ h[\$3]++ } END { for (k in h) print h[k], k }' | sort -nr
 echo
@@ -60,12 +60,12 @@ EOF
 
 metrix ()
 {
-oc exec -it -c prometheus -n openshift-monitoring prometheus-k8s-0 -- curl --data-urlencode "query=histogram_quantile(0.99, sum(rate(etcd_network_peer_round_trip_time_seconds_bucket[5m])) by (le,instance))" http://localhost:9090/api/v1/query | jq ".data.result" > $data_dir/latency.out
+oc exec -it -c prometheus -n openshift-monitoring prometheus-k8s-0 -- curl --data-urlencode "query=histogram_quantile(0.99, sum(rate(etcd_network_peer_round_trip_time_seconds_bucket[5m])) by (le,instance))" http://localhost:9090/api/v1/query | jq ".data.result" > $data_dir/latency.log
 }
 
 obj_size ()
 {
-oc rsh -n openshift-etcd $etcd_pod > $data_dir/etcd_object_size.logs <<EOF
+oc rsh -n openshift-etcd $etcd_pod > $data_dir/etcd_object_size.log <<EOF
 for base in kubernetes openshift; do
     readarray -t RESOURCES <<< \
         "\$(etcdctl --command-timeout=30s \
