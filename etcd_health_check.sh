@@ -3,8 +3,8 @@
 # variable
 
 etcd_pod=$(oc get pods -n openshift-etcd -l app=etcd --no-headers | tail -1 | awk '{print $1}')
-data_dir="/home/core/etcd_data"
-archive_name="/home/core/etcd_data.tar.gz"
+data_dir="/tmp/etcd_data"
+archive_name="/tmp/etcd_data.tar.gz"
 
 pre ()
 {
