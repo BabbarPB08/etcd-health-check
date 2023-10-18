@@ -58,7 +58,7 @@ etcdctl --command-timeout=60s get --prefix --keys-only /kubernetes.io/pods | awk
 EOF
 }
 
-mertix ()
+metrix ()
 {
 oc exec -it -c prometheus -n openshift-monitoring prometheus-k8s-0 -- curl --data-urlencode "query=histogram_quantile(0.99, sum(rate(etcd_network_peer_round_trip_time_seconds_bucket[5m])) by (le,instance))" http://localhost:9090/api/v1/query | jq ".data.result" > $data_dir/latency.out
 }
@@ -82,11 +82,9 @@ EOF
 }
 
 pre
-pack
 etcd_table
 etcd_objects_count
 obj_size
+metrix
+pack
 post
-
-# Author: Bharat Babbar
-# Email: bharatbabbar28@gmail.com
