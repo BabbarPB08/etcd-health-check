@@ -5,7 +5,7 @@
 1. Download the script using `curl`:
 
 ```
-curl -O https://raw.githubusercontent.com/BabbarPB08/etcd-health-check/main/etcd_health_check.sh
+curl -O https://raw.githubusercontent.com/BabbarPB08/etcd-health-check/test/etcd_health_check.sh
 ```
 
 This command will download the script and save it to your current working directory with the same filename.
